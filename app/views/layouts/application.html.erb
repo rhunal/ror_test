@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SolbegTest</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <header>
+      <% if user_signed_in? %>
+        <%= link_to 'Home', root_path, class: "nav_link #{ 'active' if controller_name == 'home' }" %>
+
+        <% if current_user.is_admin? %>
+          <%= link_to 'All users', users_path, class: "nav_link #{ 'active' if controller_name == 'users' && action_name == 'index' }" %>
+        <% end %>
+
+        <%= link_to 'Your Profile', profile_user_path(current_user), class: "nav_link #{ 'active' if controller_name == 'users' && action_name == 'profile' && params[:id] == current_user.id.to_s}" %>
+        <%= link_to 'Edit Your Profile', edit_user_path(current_user), class: "nav_link #{ 'active' if controller_name == 'users' && action_name == 'edit' && params[:id] == current_user.id.to_s }" %>
+
+        <label class='label_nav'>Signed in as: <%= current_user.email %></label>
+
+        <%= link_to 'Sign out', destroy_user_session_path, method:'delete', class: 'nav_link' %>
+      <% end %>
+    </header>
+
+    <%= render_breadcrumbs :separator => ' / ' %>
+
+    <% if notice %>
+      <p class="alert alert-success"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+      <p class="alert alert-danger"><%= alert %></p>
+    <% end %>
+    <%= yield %>
+  </body>
+</html>

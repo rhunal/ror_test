@@ -1,0 +1,41 @@
+<div class="card-header">
+  Edit Profile
+</div>
+<%= simple_form_for(@user) do |f| %>
+  <%= f.error_notification message: @user.errors.full_messages.to_sentence %>
+
+  <div class="row form-inputs">
+    <% if @user.is_admin? %>
+      <div class="col-sm-6">
+        <%= f.input :phone_number %>
+      </div>
+    <% else %>
+      <div class="col-sm-6">
+        <% editable_non_admin_columns.each do |column| %>
+          <%= f.input column %>
+        <% end %>
+      </div>
+
+      <div class="card col-sm-6">
+        <% if @user.profile_picture.attached? %>
+          <%= image_tag @user.profile_picture, class: 'card-image-top', style: 'max-width: 200px;' %>
+        <% end %>
+
+        <div class="card-body">
+          <h5 class="card-title">Profile Picture</h5>
+
+          <div class="input-group mb-3">
+            <div class="custom-file">
+              <%= f.file_field :profile_picture, class: 'custom-file-input'%>
+              <label class="custom-file-label" for='profile_picture'>Choose image</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

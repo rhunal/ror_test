@@ -1,0 +1,14 @@
+<div>
+  <h1 style='text-align: center;'>Welcome, <%= current_user.name %>!</h1>
+
+  <% if current_user.is_admin? %>
+    <p>As an Admin User, you can access all Users tab.</p>
+
+    <p>However, you can only edit Phone number of your own address. (i.e. AdminUser cannot edit his own details except Phone Number)</p>
+
+    <p>Being an Admin User, you can update the address of the other Non-Admin Users Under 'Users > User#1 > Profile' tab. (i.e. AdminUser can edit all the details of other Non-Admin Users)
+    </p>
+  <% else %>
+    <p>You can edit your profile (i.e. Address, Profile Picture)</p>
+  <% end %>
+</div>
